@@ -105,6 +105,10 @@ if [ "$answer" == "yes" ]; then
             sed -i '/^exit 0/i sudo mount /dev/sda1 /upan' /etc/rc.local
             sed -i '/^exit 0/i chmod -R u+x /sd/wankeyun/' /etc/rc.local
             sed -i '/^exit 0/i /sd/wankeyun/rc_local_run.sh' /etc/rc.local
+            # 修改关闭LED灯光
+            sed -i '/^exit 0/i echo "none" >/sys/class/leds/onecloud:blue:alive/trigger' /etc/rc.local
+            sed -i '/^exit 0/i echo "none" >/sys/class/leds/onecloud:green:alive/trigger' /etc/rc.local
+            sed -i '/^exit 0/i echo "none" >/sys/class/leds/onecloud:red:alive/trigger' /etc/rc.local
         else
             echo "未找到 /etc/rc.local 文件"
         fi
@@ -119,6 +123,9 @@ if [ "$answer" == "yes" ]; then
         echo -e "\033[32m 4-挂载SD卡/sd，U盘/upan \033[0m"
         echo -e "\033[32m 5-搭建Samba服务器：访问地址:\\onecloud,共享目录:/upan,用户:root,密码,sw63828 \033[0m"
         echo -e "\033[32m 6-配置github ssh权限,仓库：https://github.com/sw586/wankeyun \033[0m"
+        echo -e "\033[32m 7-开机启动加入：挂载U盘,启动rc_local_run.sh,设置/sd/wankeyun/执行权限 \033[0m"
+        echo -e "\033[32m 8-开机启动加入：关闭主板碍眼的LED灯光,让他完全不亮 \033[0m"
+
         echo -e "\033[32m                                  \033[0m"
     else
         echo "检测失败，请检测！"
